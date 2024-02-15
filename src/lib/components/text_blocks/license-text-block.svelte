@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ShieldCheck } from 'lucide-svelte';
-	import minecraftLogo from '$lib/assets/minecraft_logo.png';
+	import minecraftLogo from '$lib/assets/minecraft-logo.png';
 	import { reveal } from 'svelte-reveal';
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from 'svelte-reveal';
-	import title from '$lib/assets/hrizolight_title.png';
+	import title from '$lib/assets/hrizolight-title.png';
 </script>
 
 <div class="m-auto flex w-2/3 flex-col">

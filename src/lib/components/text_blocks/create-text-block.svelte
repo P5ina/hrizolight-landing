@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Settings } from 'lucide-svelte';
-	import createLogo from '$lib/assets/create_logo.webp';
+	import createLogo from '$lib/assets/create-logo.webp';
 	import { reveal } from 'svelte-reveal';
 </script>
 

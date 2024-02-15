@@ -4,7 +4,7 @@
 	import CreateTextBlock from '$lib/components/text_blocks/create-text-block.svelte';
 	import FreeTextBlock from '$lib/components/text_blocks/free-text-block.svelte';
 	import LicenseTextBlock from '$lib/components/text_blocks/license-text-block.svelte';
-	import WhitelistForm from './whitelist-form.svelte';
+	import WhitelistForm from '$lib/components/whitelist-form/whitelist-form.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;

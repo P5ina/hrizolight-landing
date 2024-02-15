@@ -1,8 +1,9 @@
 import prisma from '$lib/prisma';
 import { fail, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { superValidate } from 'sveltekit-superforms/server';
+import { setError, superValidate } from 'sveltekit-superforms/server';
 import { formSchema } from './schema';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export const load: PageServerLoad = async () => {
 	return {
@@ -11,33 +12,42 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions = {
-	default: async ({ request }) => {
-		const data = await request.formData();
-
-		const nickname = data.get('nickname');
-		const reason = data.get('reason');
-
-		if (!nickname) {
-			return fail(400, { nickname, reason, missing: true });
+	default: async (event) => {
+		const form = await superValidate(event, formSchema);
+		if (!form.valid) {
+			return fail(400, {
+				form
+			});
 		}
-
-		if (typeof nickname !== 'string' || typeof reason !== 'string') {
-			return fail(400, { nickname, reason, invalid: true });
-		}
-
+		const { nickname, reason } = form.data;
 		const res = await fetch(`https://api.mojang.com/users/profiles/minecraft/${nickname}`);
 		const accountInfo = await res.json();
 
 		if (!accountInfo.name || accountInfo.demo === true) {
-			return fail(400, { nickname, reason, accountDoesntExists: true });
+			return setError(form, 'nickname', 'Игрок не найден');
 		}
 
-		await prisma.whitelistRequest.create({
-			data: {
-				nickname: accountInfo.name,
-				reason
+		const whitelistRequest = await prisma.whitelistRequest.findFirst({
+			where: {
+				nickname: accountInfo.name
 			}
 		});
-		return { success: true };
+		if (whitelistRequest) {
+			return setError(form, 'nickname', 'Заявка с таким ником уже существует');
+		}
+
+		try {
+			await prisma.whitelistRequest.create({
+				data: {
+					nickname: accountInfo.name,
+					reason
+				}
+			});
+		} catch (e) {
+			if (e instanceof PrismaClientKnownRequestError && e.code === 'P2002') {
+				return setError(form, 'nickname', 'Заявка с таким ником уже существует');
+			}
+		}
+		return { form };
 	}
 } satisfies Actions;
