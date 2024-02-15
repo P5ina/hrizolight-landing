@@ -1,14 +1,23 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
 	import type { SuperValidated } from 'sveltekit-superforms';
-	import { formSchema, type FormSchema } from '../../../routes/schema';
+	import { formSchema, type FormSchema } from './schema';
 	import * as Form from '$lib/components/ui/form';
-	import ConfirmButton from './confirm-button.svelte';
+	import ConfirmButton from '$lib/components/whitelist-form/confirm-button.svelte';
 	import type { FormOptions } from 'formsnap';
+	import type { FormResult } from 'sveltekit-superforms/client';
+	import type { ActionData } from './$types';
+	import { toast } from 'svelte-sonner';
 
 	export let form: SuperValidated<FormSchema>;
 	const options: FormOptions<FormSchema> = {
-		delayMs: 200
+		delayMs: 200,
+		onResult(event) {
+			const result = event.result as FormResult<ActionData>;
+			if (result.type === 'success') {
+				toast.success('Заявка отправлена');
+			}
+		}
 	};
 </script>
 
