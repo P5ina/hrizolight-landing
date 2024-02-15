@@ -21,7 +21,7 @@
 	};
 </script>
 
-<Card.Root class="mx-auto mt-8 max-w-xl">
+<Card.Root class="mt-2">
 	<Card.Header>
 		<Card.Title>Вход на сервер</Card.Title>
 		<Card.Description>
@@ -48,8 +48,10 @@
 			</Form.Field>
 			<Form.Field {config} name="ruleAgreement">
 				<Form.Item>
-					<Form.Checkbox />
-					<Form.Label>Я соглашаюсь с правилами сервера</Form.Label>
+					<div class="flex flex-row items-center space-x-3 space-y-0">
+						<Form.Checkbox />
+						<Form.Label>Я соглашаюсь с правилами сервера</Form.Label>
+					</div>
 					<Form.Validation />
 				</Form.Item>
 			</Form.Field>

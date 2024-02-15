@@ -6,6 +6,7 @@
 	import LicenseTextBlock from '$lib/components/text_blocks/license-text-block.svelte';
 	import WhitelistForm from './whitelist-form.svelte';
 	import type { PageData } from './$types';
+	import Faq from './faq.svelte';
 
 	export let data: PageData;
 
@@ -24,9 +25,17 @@
 <LicenseTextBlock />
 <FreeTextBlock />
 <CreateTextBlock />
-<div class="mt-16 p-16">
+<Faq />
+<div class="p-16">
 	<h1 class="scroll-m-20 text-center text-3xl tracking-tight lg:text-4xl">
 		Так чего же ты ждешь? Заходи скорее!
 	</h1>
-	<WhitelistForm form={data.form} />
+	<ol class="mx-auto max-w-xl">
+		<li class="mt-8">
+			1. Заполни форму:
+			<WhitelistForm form={data.form} />
+		</li>
+		<li class="mt-4">2. Установи модпак по <a href="/" class="text-primary">ссылке.</a></li>
+		<li class="mt-4">3. Запусти и начни играть!</li>
+	</ol>
 </div>

@@ -7,5 +7,11 @@
 
 <ModeWatcher />
 <Toaster />
-<slot />
-<Footer />
+<div class="flex min-h-screen flex-col">
+	<div class="flex-1">
+		<slot />
+	</div>
+	<div class="flex-none">
+		<Footer />
+	</div>
+</div>
