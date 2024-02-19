@@ -6,6 +6,7 @@
 	let profileStatus: 'pending' | 'approved' | 'rejected' = 'rejected';
 </script>
 
+<div class="h-16"></div>
 <div class="mx-16 mt-10 flex flex-row items-stretch space-x-12">
 	<SkinView width={250} height={500} />
 	<div>
