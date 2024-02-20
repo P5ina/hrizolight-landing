@@ -1,6 +1,6 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import { ClientResponseError } from 'pocketbase';
-import { superValidate } from 'sveltekit-superforms';
+import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
 
@@ -33,7 +33,9 @@ export const actions = {
 		} catch (e) {
 			console.error('Error signing in:', e);
 			if (e instanceof ClientResponseError) {
-				return error(400, 'Неверный email или пароль');
+				console.log('Response:', e.response);
+				setError(form, 'email', 'Некорректный email адрес или пароль');
+				return setError(form, 'password', 'Некорректный email адрес или пароль');
 			}
 			return error(500, 'Неизвестная ошибка авторизации');
 		}

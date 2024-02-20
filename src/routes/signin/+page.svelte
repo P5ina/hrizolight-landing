@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+	import clsx from 'clsx';
 	import { superForm } from 'sveltekit-superforms';
 
 	export let data;
@@ -35,7 +36,7 @@
 			<input
 				type="email"
 				name="email"
-				class="input"
+				class={clsx('input', $errors.email && 'input-error')}
 				aria-invalid={$errors.email ? 'true' : undefined}
 				bind:value={$form.email}
 			/>
@@ -46,7 +47,7 @@
 			<input
 				type="password"
 				name="password"
-				class="input"
+				class={clsx('input', $errors.password && 'input-error')}
 				aria-invalid={$errors.password ? 'true' : undefined}
 				bind:value={$form.password}
 			/>

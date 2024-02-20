@@ -1,4 +1,5 @@
 import { error, fail, redirect } from '@sveltejs/kit';
+import { ClientResponseError } from 'pocketbase';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
@@ -47,6 +48,17 @@ export const actions = {
 			console.log('User created!');
 		} catch (e) {
 			console.error('Error creating user:', e);
+			if (e instanceof ClientResponseError) {
+				console.log('response:', e.response);
+				if (e.response.data.email.code === 'validation_invalid_email') {
+					return setError(
+						form,
+						'email',
+						'Некорректный email адрес или пользователь с таким email уже существует'
+					);
+				}
+				return error(400, 'Пользователь с таким email уже существует');
+			}
 			return error(500, 'Ошибка регистрации пользователя');
 		}
 

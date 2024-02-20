@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { AppShell, Toast, initializeStores } from '@skeletonlabs/skeleton';
+	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+	import { storePopup } from '@skeletonlabs/skeleton';
 	import '../app.postcss';
 	import Header from './header.svelte';
 	import type { PageData } from './$types';
@@ -7,6 +9,7 @@
 	export let data: PageData;
 
 	initializeStores();
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 </script>
 
 <Toast />
