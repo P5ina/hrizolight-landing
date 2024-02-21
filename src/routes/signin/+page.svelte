@@ -28,7 +28,8 @@
 	</p>
 	<form
 		method="post"
-		class="flex flex-col items-center space-y-2 w-full max-w-xl px-16"
+		action="?/withEmail"
+		class="flex flex-col items-start space-y-2 w-full max-w-xl px-16"
 		use:enhance
 	>
 		<label class="label w-full">
@@ -53,7 +54,15 @@
 			/>
 			{#if $errors.password}<span class="text-error-500">{$errors.password}</span>{/if}
 		</label>
+		<a
+			href="/reset-password"
+			class="text-primary-500 font-medium hover:cursor-pointer hover:underline">Забыли пароль?</a
+		>
 		<div class="h-1" />
 		<button type="submit" class="btn variant-filled-primary w-full">Войти</button>
+		<!-- <p class="text-center mx-auto my-4">или</p>
+		<div class="mx-auto">
+			<SigninWithGoogleButton />
+		</div> -->
 	</form>
 </div>

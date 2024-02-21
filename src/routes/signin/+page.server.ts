@@ -21,7 +21,7 @@ export const load = async () => {
 };
 
 export const actions = {
-	default: async ({ locals, request }) => {
+	withEmail: async ({ locals, url, request }) => {
 		const form = await superValidate(request, zod(schema));
 
 		if (!form.valid) {
@@ -34,12 +34,30 @@ export const actions = {
 			console.error('Error signing in:', e);
 			if (e instanceof ClientResponseError) {
 				console.log('Response:', e.response);
-				setError(form, 'email', 'Некорректный email адрес или пароль');
-				return setError(form, 'password', 'Некорректный email адрес или пароль');
+				if (e.response.message === 'Failed to authenticate.') {
+					setError(form, 'email', 'Некорректный email адрес или пароль');
+					return setError(form, 'password', 'Некорректный email адрес или пароль');
+				}
 			}
 			return error(500, 'Неизвестная ошибка авторизации');
 		}
 
-		redirect(303, '/profile');
+		if (!locals.pb.authStore.model?.verified) {
+			return setError(form, 'email', 'Email не подтвержден');
+		}
+
+		const redirectRoute = url.searchParams.get('redirect') || '/profile';
+		redirect(303, redirectRoute);
+	},
+	google: async ({ locals }) => {
+		try {
+			await locals.pb.collection('users').authWithOAuth2({ provider: 'google' });
+		} catch (e) {
+			console.error('Error signing in with Google:', e);
+			if (e instanceof ClientResponseError) {
+				console.log('Response:', e.response);
+			}
+			return error(500, 'Неизвестная ошибка авторизации');
+		}
 	}
 };
