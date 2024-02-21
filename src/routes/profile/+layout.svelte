@@ -1,6 +1,4 @@
 <script lang="ts">
-	export let data;
-
 	const navigation = [
 		{ title: 'Основные', href: '/profile/general' },
 		{ title: 'Безопасность', href: '/profile/security' },
@@ -19,4 +17,7 @@
 			</li>
 		{/each}
 	</ul>
+	<div>
+		<slot />
+	</div>
 </div>

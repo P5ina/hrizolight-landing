@@ -16,13 +16,19 @@ export const handle = async ({ event, resolve }) => {
 	}
 
 	const userRequiredRoutes = ['/profile'];
-	if (userRequiredRoutes.includes(event.url.pathname) && !event.locals.user) {
+	if (
+		userRequiredRoutes.some((route) => event.url.pathname.startsWith(route)) &&
+		!event.locals.user
+	) {
 		console.log('Redirecting to /signin');
 		throw redirect(303, '/signin?redirect=' + event.url.pathname);
 	}
 
 	const userForbiddenRoutes = ['/signin', '/signup', '/reset-password'];
-	if (userForbiddenRoutes.includes(event.url.pathname) && event.locals.user) {
+	if (
+		userForbiddenRoutes.some((route) => event.url.pathname.startsWith(route)) &&
+		event.locals.user
+	) {
 		console.log('Redirecting to /');
 		throw redirect(303, '/');
 	}

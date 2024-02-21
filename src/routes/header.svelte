@@ -22,7 +22,7 @@
 	<!-- <div class="arrow variant-filled-surface" /> -->
 </div>
 
-<AppBar>
+<AppBar class="h-16 justify-center shadow-2xl">
 	<svelte:fragment slot="lead">
 		<a href="/">
 			<Home class="w-6 h-6" />
@@ -31,7 +31,7 @@
 	<svelte:fragment slot="trail">
 		{#if user}
 			<button class="btn-icon variant-filled h-8 w-8" use:popup={profilePopup}>
-				<Avatar src="steve-avatar.png" fallback="steve-avatar.png"></Avatar>
+				<Avatar src="/images/steve-avatar.png" fallback="/images/steve-avatar.png"></Avatar>
 			</button>
 		{:else}
 			<div class="flex space-x-4">
