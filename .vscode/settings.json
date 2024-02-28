@@ -113,5 +113,6 @@
 		"transition",
 		"width",
 		"zIndex"
-	]
+	],
+	"editor.wordBasedSuggestions": "off"
 }
